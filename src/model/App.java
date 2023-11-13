@@ -46,7 +46,7 @@ public class App {
         }
 
         Proceso nuevoProceso = new Proceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo);
-        listaProcesos.agregarFinal(nuevoProceso);
+        listaProcesos.agregarInicio(nuevoProceso);
         System.out.println("Proceso creado con éxito");
         return nuevoProceso;
     }
@@ -83,31 +83,6 @@ public class App {
 
         return 0;
     }
-
-
-/*    public Usuario crearCuentasDeUsuario(String userId, String password, Rol rol) {
-        // Verificar si la lista de usuarios es null
-        if (listaUsuarios == null) {
-            System.out.println("Error: la lista de usuarios es null");
-            return null;
-        }
-
-        // Buscar si ya existe un usuario con el mismo userId
-        Nodo<Usuario> nodoUsuario = listaUsuarios.buscarNodo(new Usuario(userId, null, null));
-
-        if (nodoUsuario != null) {
-            // Ya existe un usuario con el mismo userId
-            System.out.println("Ya existe un usuario con el mismo userId: " + nodoUsuario.getValorNodo().getUserId() + ". No se puede crear la cuenta.");
-            return null;
-        }
-
-        // No existe un usuario con el mismo userId, crear y agregar a la lista
-        Usuario nuevoUsuario = new Usuario(userId, password, rol);
-        listaUsuarios.agregarFinal(nuevoUsuario);
-        System.out.println("Usuario creado con éxito: " + nuevoUsuario.getUserId());
-        return nuevoUsuario;
-    }
-*/
 
     public Usuario crearCuentasDeUsuario(String userId, String password, Rol rol) {
         // Verificar si la lista de usuarios es null

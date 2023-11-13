@@ -85,8 +85,6 @@ public class Proceso {
         }
     }
 
-
-
     public Actividad crearActividadAlFinal(String nombre, String descripcion, boolean obligatoriedad, Cola<Tarea> tareas) {
         // Crear una instancia de Actividad con la información proporcionada
         Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad, tareas);
@@ -108,29 +106,6 @@ public class Proceso {
         // Devolver la nueva actividad
         return nuevaActividad;
     }
-
-    /*public Actividad crearActividadDespuesDeUltima(Actividad actividad1, Actividad actividad2) {
-        // Verificar que la actividad1 está en la lista
-        Nodo<Actividad> nodoActividad1 = listaActividades.buscarNodo(actividad1);
-        if (nodoActividad1 != null) {
-            // Crear la nueva actividad (copia de actividad2)
-            Actividad nuevaActividad = new Actividad(
-                    actividad2.getNombre(),
-                    actividad2.getDescripcion(),
-                    actividad2.isObligatoriedad(),
-                    actividad2.getTareas()
-            );
-
-            // Insertar la nueva actividad después de la última
-            listaActividades.crearDespuesDeUltimo(listaActividades, nodoActividad1.getValorNodo(), nuevaActividad);
-
-            return nuevaActividad;
-        }
-
-        // Si la actividad1 no fue encontrada, retornar null
-        return null;
-    }*/
-
 
         public void crearDespuesDeUltimo(Actividad actividadExistente, Actividad nuevaActividad) {
             Nodo<Actividad> nodoActual = listaActividades.getNodoPrimero();
