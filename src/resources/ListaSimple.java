@@ -133,35 +133,6 @@ public class ListaSimple<T> implements Iterable<T>{
         tamano++;
     }
 
-    public void crearDespuesDeUltimo(ListaSimple<T> lista, T elementoExistente, T nuevoElemento) {
-        Nodo<T> nodoActual = nodoPrimero;
-        Nodo<T> ultimoNodoConElemento = null;
-        Nodo<T> nodoAnterior = null;
-
-        // Iterar sobre la lista para encontrar la última ocurrencia del elemento existente
-        while (nodoActual != null) {
-            if (nodoActual.getValorNodo().equals(elementoExistente)) {
-                ultimoNodoConElemento = nodoActual;
-            }
-            nodoAnterior = nodoActual;
-            nodoActual = nodoActual.getSiguienteNodo();
-        }
-
-        // Verificar si se encontró alguna ocurrencia del elemento existente
-        if (ultimoNodoConElemento != null) {
-            // Crear el nuevo nodo y asignarle el nuevo elemento
-            Nodo<T> nuevoNodo = new Nodo<>(nuevoElemento);
-
-            // Insertar el nuevo nodo después del último nodo con el elemento existente
-            nuevoNodo.setSiguienteNodo(ultimoNodoConElemento.getSiguienteNodo());
-            ultimoNodoConElemento.setSiguienteNodo(nuevoNodo);
-        } else {
-            // El elemento existente no se encontró en la lista
-            System.out.println("El elemento existente no se encuentra en la lista.");
-        }
-    }
-
-
     private boolean estaVacia() { return (nodoPrimero == null)? true:false;
     }
 

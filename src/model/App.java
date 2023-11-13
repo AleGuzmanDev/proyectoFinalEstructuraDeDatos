@@ -38,13 +38,19 @@ public class App {
     }
 
 
-    public Proceso crearProceso(String id, String nombre, ListaSimple<Actividad> lisstaActividades, int tiempoMinimo, int tiempoMaximo){
+    public Proceso crearProceso(String id, String nombre, ListaSimple<Actividad> listaActividades, int tiempoMinimo, int tiempoMaximo) {
+        Nodo<Proceso> nodoProceso = listaProcesos.buscarNodo(new Proceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo));
 
-        Proceso proceso = new Proceso(id,nombre,lisstaActividades,tiempoMinimo,tiempoMaximo);
-        listaProcesos.agregarFinal(proceso);
-        System.out.println("Proceso creado con exito");
-        return proceso;
+        if (nodoProceso != null) {
+            throw new RuntimeException("Ya existe un proceso con ese ID");
+        }
+
+        Proceso nuevoProceso = new Proceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo);
+        listaProcesos.agregarFinal(nuevoProceso);
+        System.out.println("Proceso creado con éxito");
+        return nuevoProceso;
     }
+
 
     private Proceso configurarProceso(){
         return null;

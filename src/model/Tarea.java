@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 import resources.Cola;
+import resources.Nodo;
 
 public class Tarea {
     private String nombre;
@@ -18,9 +19,39 @@ public class Tarea {
         this.obligatoriedad = obligatoriedad;
     }
 
-    private void insertarTareaPosicionDeterminada(Tarea tarea, int posicion) {
+    public Tarea insertarEnPosicionDeterminada(Tarea tarea, int posicion) {
+        // Verificar si la posición es válida
+        if (posicion < 0 || posicion > cola.tamanio) {
+            throw new IllegalArgumentException("Posición inválida");
+        }
 
-        cola.insertarEnPosicion(tarea,posicion);
+        // Desencolar hasta la posición deseada
+        int i = 0;
+        Cola<Tarea> colaAuxiliar = new Cola<>(); // Crear una cola auxiliar
+
+        while (i < posicion) {
+            Tarea tareaDesencolada = cola.desencolar(); // Cambiar por el método real de desencolar Tarea
+            colaAuxiliar.encolar(tareaDesencolada); // Encolar en la cola auxiliar
+            i++;
+        }
+
+        // Encolar la nueva tarea en la posición deseada
+        colaAuxiliar.encolar(tarea); // Encolar la nueva tarea
+
+        // Desencolar y volver a encolar las tareas restantes
+        i = posicion + 1;
+        while (i < cola.tamanio) {
+            Tarea tareaDesencolada = cola.desencolar(); // Cambiar por el método real de desencolar Tarea
+            colaAuxiliar.encolar(tareaDesencolada); // Encolar en la cola auxiliar
+            i++;
+        }
+
+        // Volver a encolar las tareas desde la cola auxiliar a la cola original
+        while (!colaAuxiliar.estaVacia()) {
+            cola.encolar(colaAuxiliar.desencolar()); // Cambiar por el método real de encolar Tarea
+        }
+
+        return tarea;
     }
 
 

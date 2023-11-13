@@ -9,44 +9,45 @@ public class Cola<T> {
 
 	public NodoCola<T> nodoPrimero, nodoUltimo;
 	public int tamanio;
-	
 
-	
+
 	/**
 	 * Agrega un elemento en la Cola
+	 *
 	 * @param dato elemento a guardar en la Cola
 	 */
 	public void encolar(T dato) {
-		
+
 		NodoCola<T> nodo = new NodoCola<>(dato);
-		
-		if(estaVacia()) {
+
+		if (estaVacia()) {
 			nodoPrimero = nodoUltimo = nodo;
-		}else {
+		} else {
 			nodoUltimo.setSiguienteNodo(nodo);
 			nodoUltimo = nodo;
 		}
-		
+
 		tamanio++;
 	}
-	
+
 	/**
 	 * Retorna y elimina el elemento que est� al incio de la Cola
+	 *
 	 * @return Primer elemento de la Cola
 	 */
 	public T desencolar() {
-		
-		if(estaVacia()) {
+
+		if (estaVacia()) {
 			throw new RuntimeException("La Cola est� vac�a");
 		}
-		
+
 		T dato = nodoPrimero.getValorNodo();
 		nodoPrimero = nodoPrimero.getSiguienteNodo();
-		
-		if(nodoPrimero==null) {
+
+		if (nodoPrimero == null) {
 			nodoUltimo = null;
 		}
-		
+
 		tamanio--;
 		return dato;
 	}
@@ -54,6 +55,7 @@ public class Cola<T> {
 
 	/**
 	 * Verifica si la Cola est� vac�a
+	 *
 	 * @return true si est� vac�a
 	 */
 	public boolean estaVacia() {
@@ -62,6 +64,7 @@ public class Cola<T> {
 
 	/**
 	 * Busca y retorna el nodo con el valor especificado al desencolar la Cola
+	 *
 	 * @param dato Valor a buscar y desencolar
 	 * @return Nodo con el valor especificado, o null si no se encuentra
 	 */
@@ -158,56 +161,57 @@ public class Cola<T> {
 	public int getTamano() {
 		return tamanio;
 	}
-	
+
 	/**
 	 * Verifica si la Cola es id�ntica a la actual
+	 *
 	 * @param cola Cola a comparar
 	 * @return True si son iguales
 	 */
 	public boolean sonIdenticas(Cola<T> cola) {
-		
+
 		Cola<T> clon1 = clone();
 		Cola<T> clon2 = cola.clone();
-		
-		if(clon1.getTamano() == clon2.getTamano()) {
-			
-			while( !clon1.estaVacia() ) {				
-				if( !clon1.desencolar().equals( clon2.desencolar() ) ) {
+
+		if (clon1.getTamano() == clon2.getTamano()) {
+
+			while (!clon1.estaVacia()) {
+				if (!clon1.desencolar().equals(clon2.desencolar())) {
 					return false;
-				}				
+				}
 			}
-			
-		}else {
+
+		} else {
 			return false;
 		}
-		
-		return  true;
+
+		return true;
 	}
-	
+
 	/**
 	 * Imprime una cola en consola
 	 */
 	public void imprimir() {
 		NodoCola<T> aux = nodoPrimero;
-		while(aux!=null) {
-			System.out.print(aux.getValorNodo()+"\t");
+		while (aux != null) {
+			System.out.print(aux.getValorNodo() + "\t");
 			aux = aux.getSiguienteNodo();
 		}
 		System.out.println();
 	}
-	
+
 	@Override
 	protected Cola<T> clone() {
-		
+
 		Cola<T> nueva = new Cola<>();
 		NodoCola<T> aux = nodoPrimero;
-		
-		while(aux!=null) {
-			nueva.encolar( aux.getValorNodo() );
+
+		while (aux != null) {
+			nueva.encolar(aux.getValorNodo());
 			aux = aux.getSiguienteNodo();
 		}
-		
-		return nueva;		
+
+		return nueva;
 	}
 
 	/*public Nodo<T> buscarNodo(T tarea) {
@@ -223,6 +227,15 @@ public class Cola<T> {
 		return null;
 	}*/
 
+
+	@Override
+	public String toString() {
+		return "Cola{" +
+				"nodoPrimero=" + nodoPrimero +
+				", nodoUltimo=" + nodoUltimo +
+				", tamanio=" + tamanio +
+				'}';
+	}
 }
 
 
