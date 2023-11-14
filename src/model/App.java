@@ -9,15 +9,15 @@ import java.util.function.Predicate;
 
 public class App {
 
-    private ListaSimple listaProcesos;
+    private ListaSimple <Proceso>listaProcesos;
 
     Scanner leer = new Scanner(System.in);
 
-    private ListaSimple listaUsuarios;
+    private ListaSimple<Usuario> listaUsuarios;
 
-    public App(ListaSimple listaProcesos, ListaSimple listaUsuarios) {
-        this.listaProcesos = listaProcesos;
-        this.listaUsuarios = listaUsuarios;
+    public App() {
+        this.listaProcesos = new ListaSimple<>();
+        this.listaUsuarios = new ListaSimple<>();
     }
 
     public Usuario iniciarSesion(Usuario usuario) throws Exception {
@@ -110,7 +110,7 @@ public class App {
         return 0;
     }
 
-    public Usuario crearCuentasDeUsuario(String userId, String password, Rol rol) {
+   /* public Usuario crearCuentasDeUsuario(String userId, String password, Rol rol) {
         // Verificar si la lista de usuarios es null
         if (listaUsuarios == null) {
             System.out.println("Error: la lista de usuarios es null");
@@ -142,7 +142,7 @@ public class App {
         listaUsuarios.agregarFinal(nuevoUsuario);
         System.out.println("Usuario creado con éxito: " + nuevoUsuario.getUserId());
         return nuevoUsuario;
-    }
+    }*/
 
 
     private String notificarRecordatorios(){

@@ -96,7 +96,7 @@ public class ListaSimple<T> implements Iterable<T>{
         throw new RuntimeException("�ndice no v�lido");
     }
 
-    private Nodo<T> obtenerNodo(int indice) {
+    public Nodo<T> obtenerNodo(int indice) {
 
         if(indice>=0 && indice<tamano) {
 
