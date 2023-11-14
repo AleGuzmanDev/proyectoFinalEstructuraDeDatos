@@ -1,5 +1,6 @@
 package model;
 
+import resources.ListaDoble;
 import resources.ListaSimple;
 import resources.Nodo;
 
@@ -33,12 +34,11 @@ public class App {
 
             }
         }
-
         throw new Exception("Error al autenticarse");
     }
 
 
-    public Proceso crearProceso(String id, String nombre, ListaSimple<Actividad> listaActividades, int tiempoMinimo, int tiempoMaximo) {
+    public Proceso crearProceso(String id, String nombre, ListaDoble<Actividad> listaActividades, int tiempoMinimo, int tiempoMaximo) {
         Nodo<Proceso> nodoProceso = listaProcesos.buscarNodo(new Proceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo));
 
         if (nodoProceso != null) {
@@ -50,6 +50,32 @@ public class App {
         System.out.println("Proceso creado con éxito");
         return nuevoProceso;
     }
+
+    public void eliminarProceso(Proceso proceso) {
+
+        Nodo <Proceso> nodoProceso = listaProcesos.buscarNodo(proceso);
+        if((nodoProceso == null)){
+            throw new  RuntimeException("El proceso que deseas eliminar no existe   ");
+        }
+        listaProcesos.eliminar(proceso);
+    }
+
+    public Proceso actualizarProceso(Proceso proceso) {
+        Nodo<Proceso> nodoProceso = listaProcesos.buscarNodo(proceso);
+
+        if (nodoProceso != null) {
+            Proceso procesoEncontrado = nodoProceso.getValorNodo();
+
+            if (procesoEncontrado != null) {
+                procesoEncontrado.setNombre(proceso.getNombre());
+                procesoEncontrado.setListaActividades(proceso.getListaActividades());
+                procesoEncontrado.setTiempoMinimo(proceso.getTiempoMinimo());
+                procesoEncontrado.setTiempoMaximo(proceso.getTiempoMaximo());
+            }
+        }
+        return proceso;
+    }
+
 
 
     private Proceso configurarProceso(){
@@ -63,7 +89,7 @@ public class App {
             Proceso procesoEncontrado = (Proceso) nodoProceso.getValorNodo();
 
             if (procesoEncontrado != null) {
-                ListaSimple<Actividad> listaActividades = procesoEncontrado.getListaActividades();
+                ListaDoble<Actividad> listaActividades = procesoEncontrado.getListaActividades();
 
                 if (listaActividades != null) {
                     Actividad actividadEncontrada = listaActividades.buscarNodo(actividad).getValorNodo();
