@@ -15,8 +15,7 @@ public class ListaSimple<T> implements Iterable<T>{
     }
 
     public void agregarInicio(T valorNodo) {
-
-        Nodo <T>nuevoNodo = new Nodo<>(valorNodo);
+        Nodo <T> nuevoNodo = new Nodo<>(valorNodo);
 
         if (estaVacia()) {
             nodoPrimero = nuevoNodo;
@@ -171,7 +170,7 @@ public class ListaSimple<T> implements Iterable<T>{
         tamano++;
     }
 
-    private boolean estaVacia() { return (nodoPrimero == null)? true:false;
+    public boolean estaVacia() { return (nodoPrimero == null)? true:false;
     }
 
     @Override

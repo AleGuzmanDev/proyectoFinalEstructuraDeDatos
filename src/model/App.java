@@ -34,45 +34,52 @@ public class App {
 
             }
         }
-        throw new Exception("Error al autenticarse");
+
+        return null;
     }
 
+    public Proceso crearProceso(String id, String nombre, int tiempoMinimo, int tiempoMaximo) {
+        Proceso procesoEncontrado = null;
+        for (int i = 0; i < listaProcesos.getTamano(); i++) {
+            Proceso proceso = listaProcesos.obtenerNodo(i).getValorNodo();
 
-    public Proceso crearProceso(String id, String nombre, ListaDoble<Actividad> listaActividades, int tiempoMinimo, int tiempoMaximo) {
-        Nodo<Proceso> nodoProceso = listaProcesos.buscarNodo(new Proceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo));
+            if(proceso.getId().equals(id)){
+                procesoEncontrado = proceso;
+            }
+        }
 
-        if (nodoProceso != null) {
+        if (procesoEncontrado != null) {
             throw new RuntimeException("Ya existe un proceso con ese ID");
         }
 
-        Proceso nuevoProceso = new Proceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo);
+        Proceso nuevoProceso = new Proceso(id, nombre, tiempoMinimo, tiempoMaximo);
         listaProcesos.agregarInicio(nuevoProceso);
         System.out.println("Proceso creado con éxito");
         return nuevoProceso;
     }
 
-    public void eliminarProceso(Proceso proceso) {
+    public void eliminarProceso(Proceso proceso) throws Exception {
 
-        Nodo <Proceso> nodoProceso = listaProcesos.buscarNodo(proceso);
-        if((nodoProceso == null)){
-            throw new  RuntimeException("El proceso que deseas eliminar no existe   ");
+        if(!listaProcesos.estaVacia()){
+            listaProcesos.eliminar(proceso);
+            System.out.println("Proceso eliminado con éxito");
         }
-        listaProcesos.eliminar(proceso);
+
+        else {
+            throw new RuntimeException("No hay procesos para eliminar");
+        }
+
     }
 
-    public Proceso actualizarProceso(Proceso proceso) {
-        Nodo<Proceso> nodoProceso = listaProcesos.buscarNodo(proceso);
+    public Proceso actualizarProceso(Proceso proceso, String id) {
 
-        if (nodoProceso != null) {
-            Proceso procesoEncontrado = nodoProceso.getValorNodo();
-
-            if (procesoEncontrado != null) {
-                procesoEncontrado.setNombre(proceso.getNombre());
-                procesoEncontrado.setListaActividades(proceso.getListaActividades());
-                procesoEncontrado.setTiempoMinimo(proceso.getTiempoMinimo());
-                procesoEncontrado.setTiempoMaximo(proceso.getTiempoMaximo());
+        for (int i = 0; i < listaProcesos.getTamano(); i++) {
+            Proceso proceso1 = listaProcesos.obtenerNodo(i).getValorNodo();
+            if(proceso1.getId().equals(id)){
+               listaProcesos.obtenerNodo(i).setValorNodo(proceso);
             }
         }
+        System.out.println("Proceso actualizado con éxito");
         return proceso;
     }
 

@@ -42,8 +42,8 @@ class ProcesoTest {
         String descripcion = "Descripcion cuarta actividad";
         boolean obligatoriedad = true;
 
-        Proceso proceso = new Proceso("001", "Proceso 1", actividades, 5, 10);
-        Actividad nuevaActividad = proceso.crearActividad(nombre, descripcion, obligatoriedad, tareas);
+        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Actividad nuevaActividad = proceso.crearActividad(nombre, descripcion, obligatoriedad);
 
 // Asegurar que la nueva actividad no sea nula
         assertNotNull(nuevaActividad);

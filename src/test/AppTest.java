@@ -28,7 +28,7 @@ class AppTest {
         int tiempoMinutos = 5;
         int tiempoMaximo = 10;
 
-        Proceso proceso = app.crearProceso(id,nombre,actividads,tiempoMinutos,tiempoMaximo);
+        Proceso proceso = app.crearProceso(id,nombre,tiempoMinutos,tiempoMaximo);
 
         assertNotNull(proceso);
         assertEquals(id,proceso.getId());
@@ -40,7 +40,7 @@ class AppTest {
     }
 
     @Test
-    void eliminarProceso() {
+    void eliminarProceso() throws Exception {
 
             App app = new App();
 
@@ -51,7 +51,7 @@ class AppTest {
             int tiempoMinimo = 1;
             int tiempoMaximo = 10;
 
-            Proceso proceso = app.crearProceso(id, nombre, listaActividades, tiempoMinimo, tiempoMaximo);
+            Proceso proceso = app.crearProceso(id, nombre, tiempoMinimo, tiempoMaximo);
 
             // Verificar que el proceso se ha creado correctamente
             assertNotNull(proceso);

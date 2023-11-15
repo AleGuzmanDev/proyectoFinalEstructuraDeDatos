@@ -13,10 +13,10 @@ public class Proceso {
     private int tiempoMinimo;
     private int tiempoMaximo;
 
-    public Proceso(String id, String nombre, ListaDoble<Actividad> listaActividades, int tiempoMinimo, int tiempoMaximo) {
+    public Proceso(String id, String nombre, int tiempoMinimo, int tiempoMaximo) {
         this.id = id;
         this.nombre = nombre;
-        this.listaActividades = listaActividades;
+        this.listaActividades = new ListaDoble<>();
         this.tiempoMinimo = tiempoMinimo;
         this.tiempoMaximo = tiempoMaximo;
     }
@@ -86,71 +86,91 @@ public class Proceso {
 
 
     public void eliminarActividad(Actividad actividad) {
-        // Busco la actividad en la lista
-        NodoDoble<Actividad> nodoActividad = listaActividades.buscarNodo(actividad);
 
-        if (nodoActividad==null){
-            throw new RuntimeException("La actividad no existe en la lista");
+
+        if(!listaActividades.estaVacia()){
+            listaActividades.eliminar(actividad);
         }
-        listaActividades.eliminar(actividad);
+
+        else {
+            throw new RuntimeException("No hay procesos para eliminar");
+        }
+
     }
-    public Actividad crearActividad (String nomnre, String descripcion, boolean obligatoriedad, Cola<Tarea> tareas){
+    public Actividad crearActividad (String nombre, String descripcion, boolean obligatoriedad){
 
-        NodoDoble<Actividad> nodoActividad = listaActividades.buscarNodo(new Actividad(nombre, descripcion, obligatoriedad, tareas));
+       Actividad actividadEncontrada = null;
 
-        if(nodoActividad != null){
-            throw new RuntimeException("La actividad ya existe en la lista");
-        }
+       for (int i =0; i<listaActividades.getTamano();i++){
+           Actividad actividad = listaActividades.obtenerValorNodo(i);
 
-        Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad, tareas);
+           if(actividad.getNombre().equals(nombre)){
+               actividadEncontrada = actividad;
+           }
+       }
+
+       if (actividadEncontrada != null){
+           throw new RuntimeException("La actividad ya existe en la lista");}
+
+        Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad);
         listaActividades.agregarInicio(nuevaActividad);
         System.out.println("Actividad creada con éxito");
         return nuevaActividad;
     }
-    public Actividad actualizarActividad(Actividad actividad) {
 
-        NodoDoble<Actividad> nodoActividad = listaActividades.buscarNodo(actividad);
 
-        if (nodoActividad != null) {
-            Actividad actividadEncontrada = nodoActividad.getValorNodo();
+    public Actividad actualizarActividad(Actividad actividad, String nombre) {
+        Actividad actividadActualizada = null;
 
-            if (actividadEncontrada != null) {
-                actividadEncontrada.setNombre(actividad.getNombre());
-                actividadEncontrada.setDescripcion(actividad.getDescripcion());
-                actividadEncontrada.setObligatoriedad(actividad.isObligatoriedad());
-                actividadEncontrada.setTareas(actividad.getTareas());
+        for (int i = 0; i < listaActividades.getTamano(); i++) {
+            Actividad actividadExistente = listaActividades.obtenerValorNodo(i);
 
+            if (actividadExistente.getNombre().equals(nombre)) {
+                // Se encontró la actividad que coincide con el nombre proporcionado
+                actividadActualizada = actividadExistente;
+                actividadActualizada.setDescripcion(actividad.getDescripcion());
+                actividadActualizada.setObligatoriedad(actividad.isObligatoriedad());
+                actividadActualizada.setTareas(actividad.getTareas());
+                break;  // Terminar el bucle después de encontrar la actividad
             }
         }
-            return actividad;
+
+        if (actividadActualizada != null) {
+            System.out.println("Actividad actualizada con éxito");
+        } else {
+            System.out.println("No se encontró ninguna actividad con el nombre proporcionado");
         }
 
+        return actividadActualizada;
+    }
 
 
 
+    public Actividad crearActividadAlFinal(String nombre, String descripcion, boolean obligatoriedad) {
 
-    public Actividad crearActividadAlFinal(String nombre, String descripcion, boolean obligatoriedad, Cola<Tarea> tareas) {
-        // Crear una instancia de Actividad con la información proporcionada
-        Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad, tareas);
+        Actividad actividadEncontrada = null;
 
-        // Verificar si la actividad ya existe en la lista usando buscarNodo
-        NodoDoble<Actividad> nodoExistente = listaActividades.buscarNodo(nuevaActividad);
+        for (int i = 0; i < listaActividades.getTamano(); i++) {
+            Actividad actividadActual = listaActividades.obtenerValorNodo(i);
 
-        // Si ya existe, lanzar una excepción
-        if (nodoExistente != null) {
+            if (actividadActual.getNombre().equals(nombre)) {
+                actividadEncontrada = actividadActual;
+            }
+        }
+        if (actividadEncontrada != null) {
             throw new RuntimeException("La actividad ya existe en la lista.");
         }
 
         // Si no existe, agregar la nueva actividad al final de la lista
+        Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad);
         listaActividades.agregarFinal(nuevaActividad);
-
-        // Imprimir mensaje de éxito
         System.out.println("Actividad creada con éxito");
 
-        // Devolver la nueva actividad
         return nuevaActividad;
     }
 
+
+        //Este metodo hay que arreglarlo, porque tiene un error
         public void crearDespuesDeUltimo(Actividad actividadExistente, Actividad nuevaActividad) {
             NodoDoble<Actividad> nodoActual = listaActividades.getNodoPrimero();
             NodoDoble<Actividad> ultimoNodoConActividad = null;
@@ -181,11 +201,19 @@ public class Proceso {
 
 
     public Actividad crearActividadPosicionDeterminada(Actividad actividad, int posicion) {
-        NodoDoble<Actividad> nodoActividad = listaActividades.buscarNodo(actividad);
 
-        if (nodoActividad != null) {
-            throw new RuntimeException("La actividad ya existe en la lista");
+        Actividad actividadEncontrada = null;
+
+        for (int i =0; i<listaActividades.getTamano();i++){
+            actividad = listaActividades.obtenerValorNodo(i);
+
+            if(actividad.getNombre().equals(nombre)){
+                actividadEncontrada = actividad;
+            }
         }
+
+        if (actividadEncontrada != null){
+            throw new RuntimeException("La actividad ya existe en la lista");}
 
         // Verificar si la posición proporcionada es válida
         if (posicion < 0 || posicion > listaActividades.getTamano()) {
