@@ -76,11 +76,19 @@ public class App {
         for (int i = 0; i < listaProcesos.getTamano(); i++) {
             Proceso proceso1 = listaProcesos.obtenerNodo(i).getValorNodo();
             if(proceso1.getId().equals(id)){
-               listaProcesos.obtenerNodo(i).setValorNodo(proceso);
+             //  listaProcesos.obtenerNodo(i).setValorNodo(proceso);
+                proceso1.setNombre(proceso.getNombre());
+                proceso1.setTiempoMinimo(proceso.getTiempoMinimo());
+                proceso1.setTiempoMaximo(proceso.getTiempoMaximo());
+                proceso1.setListaActividades(proceso.getListaActividades());
+
+                System.out.println("Proceso actualizado con éxito");
+                return proceso1;
+
             }
         }
-        System.out.println("Proceso actualizado con éxito");
-        return proceso;
+
+        return null;
     }
 
 
@@ -89,25 +97,37 @@ public class App {
         return null;
     }
 
-    public void insertarTareaAlFinal(Proceso proceso, Actividad actividad, Tarea tarea) {
-        Nodo<Proceso> nodoProceso = listaProcesos.buscarNodo(proceso);
 
-        if (nodoProceso != null) {
-            Proceso procesoEncontrado = (Proceso) nodoProceso.getValorNodo();
+    public Tarea insertarTareaAlFinal(Proceso proceso, Actividad actividad, Tarea tarea) {
+        if (proceso == null || actividad == null || tarea == null) {
+            throw new IllegalArgumentException("Argumentos nulos no permitidos");
+        }
 
-            if (procesoEncontrado != null) {
-                ListaDoble<Actividad> listaActividades = procesoEncontrado.getListaActividades();
-
+        for (int i = 0; i < listaProcesos.getTamano(); i++) {
+            Proceso proceso1 = listaProcesos.obtenerValorNodo(i);
+            if (proceso1 != null && proceso1.getId().equals(proceso.getId())) {
+                ListaDoble<Actividad> listaActividades = proceso1.getListaActividades();
                 if (listaActividades != null) {
-                    Actividad actividadEncontrada = listaActividades.buscarNodo(actividad).getValorNodo();
-
-                    if (actividadEncontrada != null) {
-                        actividadEncontrada.getTareas().encolar(tarea);
+                    for (int j = 0; j < listaActividades.getTamano(); j++) {
+                        Actividad actividad1 = listaActividades.obtenerValorNodo(j);
+                        if (actividad1 != null && actividad1.getNombre().equals(actividad.getNombre())) {
+                            if (actividad1.getTareas() != null) {
+                                actividad1.getTareas().encolar(tarea);
+                                System.out.println("Tarea insertada con éxito");
+                                return tarea;
+                            }
+                        }
                     }
                 }
             }
         }
+        return null;
     }
+
+
+
+
+
 
     public double consultarTiempoDuracionProceso(Proceso proceso) {
         if (proceso != null) {

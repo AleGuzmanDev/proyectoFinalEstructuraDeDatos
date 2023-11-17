@@ -1,6 +1,8 @@
 package resources;
 
 
+import java.util.Objects;
+
 /**
  *
  * @param <T>
@@ -235,6 +237,19 @@ public class Cola<T> {
 				", nodoUltimo=" + nodoUltimo +
 				", tamanio=" + tamanio +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Cola<?> cola = (Cola<?>) o;
+		return tamanio == cola.tamanio && Objects.equals(nodoPrimero, cola.nodoPrimero) && Objects.equals(nodoUltimo, cola.nodoUltimo);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nodoPrimero, nodoUltimo, tamanio);
 	}
 }
 

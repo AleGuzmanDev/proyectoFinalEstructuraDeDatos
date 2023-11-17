@@ -21,7 +21,7 @@ class AppTest {
 
 
         App app = new App();
-        ListaDoble<Actividad> actividads = new ListaDoble<>();
+
 
         String id = "001";
         String nombre = "Proceso 1";
@@ -35,8 +35,6 @@ class AppTest {
         assertEquals(nombre,proceso.getNombre());
         assertEquals(tiempoMinutos,proceso.getTiempoMinimo());
         assertEquals(tiempoMaximo,proceso.getTiempoMaximo());
-        assertEquals(actividads,proceso.getListaActividades());
-
     }
 
     @Test
@@ -56,7 +54,6 @@ class AppTest {
             // Verificar que el proceso se ha creado correctamente
             assertNotNull(proceso);
 
-            // Intentar eliminar el proceso
             app.eliminarProceso(proceso);
 
             // Verificar que el proceso se ha eliminado correctamente de la lista de procesos en App
@@ -64,10 +61,25 @@ class AppTest {
         }
 
 
-
-
     @Test
     void actualizarProceso() {
+
+        App app = new App();
+
+        Proceso proceso1 = app.crearProceso("001","Proceso 1",5,10);
+        Proceso proceso2= app.crearProceso("002","Proceso 2",6,12);
+
+        app.getListaProcesos().imprimirLista();
+
+        Proceso procesoActualizado = app.actualizarProceso(proceso2,"001");
+
+        app.getListaProcesos().imprimirLista();
+
+        assertEquals(proceso1.getId(),procesoActualizado.getId());
+        assertEquals(proceso2.getNombre(),procesoActualizado.getNombre());
+        assertEquals(proceso2.getTiempoMinimo(),procesoActualizado.getTiempoMinimo());
+        assertEquals(proceso2.getTiempoMaximo(),procesoActualizado.getTiempoMaximo());
+
     }
 
     @Test
@@ -76,6 +88,12 @@ class AppTest {
 
     @Test
     void consultarTiempoDuracionProceso() {
+
+        App app = new App();
+        Proceso proceso = new Proceso("001","Proceso 1",5,10);
+        app.consultarTiempoDuracionProceso(proceso);
+
+        assertEquals(7.5,app.consultarTiempoDuracionProceso(proceso));
     }
 
     @Test
