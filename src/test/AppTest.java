@@ -1,8 +1,6 @@
 package test;
 
-import model.Actividad;
-import model.App;
-import model.Proceso;
+import model.*;
 import org.junit.jupiter.api.Test;
 import resources.ListaDoble;
 import resources.ListaSimple;
@@ -45,19 +43,23 @@ class AppTest {
             // Crear un proceso para probar su eliminación
             String id = "001";
             String nombre = "Proceso de prueba";
-            ListaDoble<Actividad> listaActividades = new ListaDoble<>();
+
+
             int tiempoMinimo = 1;
             int tiempoMaximo = 10;
 
             Proceso proceso = app.crearProceso(id, nombre, tiempoMinimo, tiempoMaximo);
+            app.crearProceso("002", "Proceso de prueba 2", 5, 10);
+
+
 
             // Verificar que el proceso se ha creado correctamente
             assertNotNull(proceso);
 
             app.eliminarProceso(proceso);
 
-            // Verificar que el proceso se ha eliminado correctamente de la lista de procesos en App
-            assertNull(app.getListaProcesos().obtenerNodo(app.getListaProcesos().obtenerPosicionNodo(proceso)));
+            // Verificar que el tamaño de la lista despues de3 eliminar una actividad
+            assertEquals(app.getListaProcesos().getTamano(),1);
         }
 
 
@@ -98,5 +100,10 @@ class AppTest {
 
     @Test
     void crearCuentasDeUsuario() {
+        App app = new App();
+        Usuario usu = app.crearCuentasDeUsuario("Aleja","1234", Rol.ADMINISTRADOR);
+        //Para saber si el usuario existe en la lista de usuarios
+        assertNotNull(app.buscarUsuario(usu));
+
     }
 }

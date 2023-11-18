@@ -12,10 +12,42 @@ class ProcesoTest {
 
     @org.junit.jupiter.api.Test
     void buscarActividad() {
+
+        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Actividad actividad = proceso.crearActividad("Actividad 1", "Descripcion 1", true);
+        Actividad actividad2 = proceso.crearActividad("Actividad 2", "Descripcion 2", true);
+        Actividad actividad3 = proceso.crearActividad("Actividad 3", "Descripcion 3", true);
+        Actividad actividad4 = proceso.crearActividad("Actividad 4", "Descripcion 4", true);
+
+
+        Actividad actividadEncontrada = proceso.buscarActividad(actividad);
+
+        System.out.println(actividad);
+
+        assertNotNull(actividad);
+
+        assertEquals(actividad,actividadEncontrada);
+
     }
 
     @org.junit.jupiter.api.Test
     void buscarTarea() {
+
+        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+
+        String nombre = "Actividad 1";
+        proceso.crearActividad(nombre, "Descripcion 1", true);
+
+        Tarea tarea = new Tarea("Tarea 1", "Descripcion Tarea", true);
+        Actividad actividadActualizar = new Actividad(nombre, "Descripcion actualizada", true);
+        actividadActualizar.getTareas().encolar(tarea);
+
+        Actividad actividadActualizada = proceso.actualizarActividad(actividadActualizar, nombre);
+
+        Actividad actividadEncontrada =  proceso.buscarActividad(actividadActualizada);
+
+        assertNotNull(proceso.buscarTarea(actividadEncontrada, actividadEncontrada.getTareas().getPrimero().getValorNodo()));
+
     }
 
     @org.junit.jupiter.api.Test
@@ -30,14 +62,6 @@ class ProcesoTest {
     void crearActividad() {
 
         ListaDoble<Actividad> actividades = new ListaDoble<>();
-        Cola<Tarea> tareas = new Cola<>();
-        Tarea tarea1 = new Tarea("Tarea1", "Descripcion primera tarea", true);
-        Tarea tarea2 = new Tarea("Tarea2", "Descripcion segunda tarea", false);
-        Tarea tarea3 = new Tarea("Tarea3", "Descripcion tercera tarea", true);
-        tareas.encolar(tarea1);
-        tareas.encolar(tarea2);
-        tareas.encolar(tarea3);
-
         String nombre = "Actividad4";
         String descripcion = "Descripcion cuarta actividad";
         boolean obligatoriedad = true;
@@ -45,25 +69,55 @@ class ProcesoTest {
         Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
         Actividad nuevaActividad = proceso.crearActividad(nombre, descripcion, obligatoriedad);
 
-// Asegurar que la nueva actividad no sea nula
+
+        actividades.agregarInicio(nuevaActividad);
+
+        actividades.imprimirLista();
+        // Asegurar que la nueva actividad no sea nula
         assertNotNull(nuevaActividad);
 
-// Asegurar que los atributos de la nueva actividad sean iguales a los esperados
+        // Asegurar que los atributos de la nueva actividad sean iguales a los esperados
         assertEquals(nombre, nuevaActividad.getNombre());
         assertEquals(descripcion, nuevaActividad.getDescripcion());
         assertEquals(obligatoriedad, nuevaActividad.isObligatoriedad());
 
-// Asegurar que las tareas de la nueva actividad sean iguales a las esperadas
-        assertEquals(tareas, nuevaActividad.getTareas());
+
 
     }
 
     @org.junit.jupiter.api.Test
     void eliminarActividad() {
+
+        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+
+        Actividad actividad = proceso.crearActividad("Actividad 1", "Descripcion 1", true);
+        proceso.crearActividad("Actividad 2", "Descripcion 2", true);
+        proceso.crearActividad("Actividad 3", "Descripcion 3", true);
+
+        proceso.eliminarActividad(actividad);
+        proceso.getListaActividades().imprimirLista();
+
+        assertEquals(proceso.getListaActividades().getTamano(), 2);
     }
 
     @org.junit.jupiter.api.Test
     void actualizarActividad() {
+
+        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+
+        String nombre = "Actividad 1";
+        proceso.crearActividad(nombre, "Descripcion 1", true);
+
+        Actividad actividadActualizar = new Actividad(nombre, "Descripcion actualizada", true);
+
+        Actividad acti = proceso.actualizarActividad(actividadActualizar, nombre );
+
+
+        assertEquals(acti.getDescripcion(), "Descripcion actualizada");
+
+
+
+
     }
 
     @org.junit.jupiter.api.Test

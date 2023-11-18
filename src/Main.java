@@ -7,26 +7,39 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        ListaDoble<Actividad> actividades = new ListaDoble<>();
+        ListaSimple<Proceso> procesos = new ListaSimple<>();
+
         App app = new App();
-        // Suponiendo que tienes una instancia de listaProcesos
-        ListaDoble<Proceso> listaProcesos = new ListaDoble<>();
 
-        // Suponiendo que tienes instancias de Proceso, Actividad y Tarea
-        Proceso proceso = new Proceso ("001", "Proceso 1", 5, 10);
-        Actividad actividad = new Actividad("Actividad 1", "Descripción de la actividad 1", true);
-        Tarea tarea = new Tarea("Tarea 1", "Descripción de la tarea 1", true);
+       Proceso proceso = app.crearProceso("1", "Proceso 1", 1, 2);
+       Proceso proceso2 = app.crearProceso("2","proceso 2",2,5);
 
-        // Luego agregas los procesos, actividades y tareas a tu lista de procesos
+       procesos.agregarInicio(proceso);
+       procesos.agregarInicio(proceso2);
 
-        // Llamada al método insertarTareaAlFinal
-        Main main = new Main();
-        Tarea tareaInsertada = app.insertarTareaAlFinal(proceso, actividad, tarea);
+       procesos.imprimirLista();
 
-        if (tareaInsertada != null) {
-            System.out.println("Tarea insertada exitosamente.");
-        } else {
-            System.out.println("No se pudo insertar la tarea.");
-        }
+
+       app.eliminarProceso(proceso2);
+
+       procesos.imprimirLista();
+
+
+
+       Actividad actividad = proceso.crearActividad("Actividad 1", "Descripcion 1", true);
+
+       Actividad actividad1 = new Actividad("Actividad2","Descripcion A2",false);
+
+       Actividad actividad2 = proceso.crearActividad("Actividad 3", "Descripcion A3", true);
+
+       actividades.agregarInicio(actividad);
+       actividades.agregarInicio(actividad2);
+
+       proceso.eliminarActividad(actividad2);
+
+       actividades.imprimirLista();
+
     }
 
 

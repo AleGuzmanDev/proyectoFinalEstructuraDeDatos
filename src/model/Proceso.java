@@ -24,6 +24,7 @@ public class Proceso {
     public Actividad buscarActividad(Actividad actividad) {
 
         if (listaActividades.buscarNodo(actividad) != null) {
+            System.out.println("Actividad encontrada");
             return actividad;
         }
         return null;
@@ -90,13 +91,17 @@ public class Proceso {
 
         if(!listaActividades.estaVacia()){
             listaActividades.eliminar(actividad);
+            System.out.println("Se ha eliminado la actividad");
         }
 
         else {
-            throw new RuntimeException("No hay procesos para eliminar");
+            throw new RuntimeException("La actividad no existe en la lista");
         }
 
     }
+
+
+
     public Actividad crearActividad (String nombre, String descripcion, boolean obligatoriedad){
 
        Actividad actividadEncontrada = null;

@@ -137,39 +137,34 @@ public class App {
         return 0;
     }
 
-   /* public Usuario crearCuentasDeUsuario(String userId, String password, Rol rol) {
-        // Verificar si la lista de usuarios es null
-        if (listaUsuarios == null) {
-            System.out.println("Error: la lista de usuarios es null");
-            return null;
-        }
+    public Usuario crearCuentasDeUsuario (String userId,String password,Rol rol){
 
-        // Definir una clase interna para la comparación
-        class UsuarioComparator implements Predicate<Usuario> {
-            @Override
-            public boolean test(Usuario usuario) {
-                return usuario != null && usuario.getUserId().equals(userId);
+        Usuario usuarioEncontrado = null;
+        for (int i = 0; i < listaUsuarios.getTamano(); i++) {
+            Usuario usuario = listaUsuarios.obtenerNodo(i).getValorNodo();
+
+            if(usuario.getUserId().equals(userId)){
+                usuarioEncontrado = usuario;
             }
         }
 
-        // Crear un objeto de la clase interna
-        UsuarioComparator usuarioComparator = new UsuarioComparator();
-
-        // Buscar si ya existe un usuario con el mismo userId
-        Nodo<Usuario> nodoUsuario = listaUsuarios.buscarNodo(usuarioComparator);
-
-        if (nodoUsuario != null) {
-            // Ya existe un usuario con el mismo userId
-            System.out.println("Ya existe un usuario con el mismo userId: " + nodoUsuario.getValorNodo().getUserId() + ". No se puede crear la cuenta.");
-            return null;
+        if (usuarioEncontrado != null) {
+            throw new RuntimeException("Ya existe un usuario con ese ID");
         }
 
-        // No existe un usuario con el mismo userId, crear y agregar a la lista
-        Usuario nuevoUsuario = new Usuario(userId, password, rol);
-        listaUsuarios.agregarFinal(nuevoUsuario);
-        System.out.println("Usuario creado con éxito: " + nuevoUsuario.getUserId());
-        return nuevoUsuario;
-    }*/
+    Usuario usuario = new Usuario(userId,password,rol);
+    listaUsuarios.agregarInicio(usuario);
+    return usuario;
+    }
+
+    public Usuario buscarUsuario(Usuario usuario) {
+
+        if (listaUsuarios.buscarNodo(usuario) != null) {
+            System.out.println("Usuario encontrado");
+            return usuario;
+        }
+        return null;
+    }
 
 
     private String notificarRecordatorios(){
