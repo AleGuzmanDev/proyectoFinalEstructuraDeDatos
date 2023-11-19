@@ -9,7 +9,7 @@ public class Proceso {
     private String id;
     private String nombre;
 
-    ListaDoble<Actividad> listaActividades = new ListaDoble<>();
+    ListaDoble<Actividad> listaActividades;
     private int tiempoMinimo;
     private int tiempoMaximo;
 
@@ -45,63 +45,60 @@ public class Proceso {
         return null;
     }
 
-
     public void intercambiarActividadesSinSusTareas(Actividad actividad1, Actividad actividad2) {
-        NodoDoble<Actividad> nodoActividad1 = listaActividades.buscarNodo(actividad1);
-        NodoDoble<Actividad> nodoActividad2 = listaActividades.buscarNodo(actividad2);
+        int indiceActividad1 = listaActividades.obtenerPosicionNodo(actividad1);
+        int indiceActividad2 = listaActividades.obtenerPosicionNodo(actividad2);
 
-        if (nodoActividad1 != null && nodoActividad2 != null) {
-            // Intercambiar actividades solo si ambas actividades existen en la lista
-            Actividad actividadAuxiliar = nodoActividad1.getValorNodo();
-            nodoActividad1.setValorNodo(nodoActividad2.getValorNodo());
-            nodoActividad2.setValorNodo(actividadAuxiliar);
+        if (indiceActividad1 != -1 && indiceActividad2 != -1) {
+            // Encontrar las actividades por sus índices y luego intercambiarlas
+            listaActividades.eliminar(actividad1); // Eliminar actividad1
+            listaActividades.insertarEnPosicion(actividad1, indiceActividad2); // Insertar actividad1 en la posición de actividad2
+            listaActividades.eliminar(actividad2); // Eliminar actividad2
+            listaActividades.insertarEnPosicion(actividad2, indiceActividad1); // Insertar actividad2 en la posición de actividad1
         } else {
             System.out.println("Una o ambas actividades no existen en la lista.");
         }
     }
 
 
-    public void intercambiarActividadesConSusListasDeTareas(Actividad actividad1, Actividad actividad2) {
-        NodoDoble<Actividad> nodoActividad1 = listaActividades.buscarNodo(actividad1);
-        NodoDoble<Actividad> nodoActividad2 = listaActividades.buscarNodo(actividad2);
 
-        if (nodoActividad1 != null && nodoActividad2 != null) {
-            // Intercambiar actividades solo si ambas actividades existen en la lista
-            Actividad valorActividad1 = nodoActividad1.getValorNodo();
-            Actividad valorActividad2 = nodoActividad2.getValorNodo();
+    public void intercambiarActividadesConTareas(Actividad actividad1, Actividad actividad2) {
 
-            // Intercambiar colas de tareas
-            Cola<Tarea> colaTareasAuxiliar = valorActividad1.getTareas();
-            valorActividad1.setTareas(valorActividad2.getTareas());
-            valorActividad2.setTareas(colaTareasAuxiliar);
+        int indiceActividad1 = listaActividades.obtenerPosicionNodo(actividad1);
+        int indiceActividad2 = listaActividades.obtenerPosicionNodo(actividad2);
 
-            // Intercambiar posiciones en la lista
-            nodoActividad1.setValorNodo(valorActividad2);
-            nodoActividad2.setValorNodo(valorActividad1);
+        if (indiceActividad1 != -1 && indiceActividad2 != -1) {
+            // Guardar las tareas de ambas actividades
+            Cola<Tarea> tareasActividad1 = actividad1.getTareas();
+            Cola<Tarea> tareasActividad2 = actividad2.getTareas();
+
+            // Intercambiar las posiciones de las actividades en la lista
+            listaActividades.eliminar(actividad1);
+            listaActividades.insertarEnPosicion(actividad1, indiceActividad2);
+            listaActividades.eliminar(actividad2);
+            listaActividades.insertarEnPosicion(actividad2, indiceActividad1);
+
+            // Intercambiar las tareas entre las actividades
+            actividad1.setTareas(tareasActividad2);
+            actividad2.setTareas(tareasActividad1);
+
+
         } else {
             System.out.println("Una o ambas actividades no existen en la lista.");
         }
     }
-
-
 
 
     public void eliminarActividad(Actividad actividad) {
-
 
         if(!listaActividades.estaVacia()){
             listaActividades.eliminar(actividad);
             System.out.println("Se ha eliminado la actividad");
         }
-
         else {
             throw new RuntimeException("La actividad no existe en la lista");
         }
-
     }
-
-
-
     public Actividad crearActividad (String nombre, String descripcion, boolean obligatoriedad){
 
        Actividad actividadEncontrada = null;

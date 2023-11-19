@@ -44,7 +44,7 @@ public class ListaSimple<T> implements Iterable<T>{
         Nodo<T> aux = nodoPrimero;
 
         while(aux!=null) {
-            System.out.print( aux.getValorNodo()+"\t" );
+            System.out.println( aux.getValorNodo()+"\t" );
             aux = aux.getSiguienteNodo();
         }
 

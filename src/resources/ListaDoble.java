@@ -145,7 +145,7 @@ public class ListaDoble<T> implements Iterable<T> {
         NodoDoble<T> aux = nodoPrimero;
 
         while(aux!=null) {
-            System.out.print( aux.getValorNodo()+"\t" );
+            System.out.println( aux.getValorNodo()+"\t" );
             aux = aux.getSiguienteNodo();
         }
 
