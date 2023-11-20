@@ -12,8 +12,8 @@ public class Main {
 
         App app = new App();
 
-       Proceso proceso = app.crearProceso("1", "Proceso 1", 1, 2);
-       Proceso proceso2 = app.crearProceso("2","proceso 2",2,5);
+       Proceso proceso = app.crearProceso("1", "Proceso 1");
+       Proceso proceso2 = app.crearProceso("2","proceso 2");
 
        procesos.agregarInicio(proceso);
        procesos.agregarInicio(proceso2);
@@ -24,8 +24,6 @@ public class Main {
        app.eliminarProceso(proceso2);
 
        procesos.imprimirLista();
-
-
 
        Actividad actividad = proceso.crearActividad("Actividad 1", "Descripcion 1", true);
 
@@ -41,10 +39,6 @@ public class Main {
        actividades.imprimirLista();
 
     }
-
-
-
-
 }
 
 

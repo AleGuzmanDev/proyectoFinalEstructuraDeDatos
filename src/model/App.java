@@ -10,9 +10,7 @@ import java.util.function.Predicate;
 public class App {
 
     private ListaSimple <Proceso>listaProcesos;
-
     Scanner leer = new Scanner(System.in);
-
     private ListaSimple<Usuario> listaUsuarios;
 
     public App() {
@@ -20,7 +18,7 @@ public class App {
         this.listaUsuarios = new ListaSimple<>();
     }
 
-    public Usuario iniciarSesion(Usuario usuario) throws Exception {
+    public Usuario iniciarSesion(Usuario usuario) {
         Nodo<Usuario> nodoUsuario = listaUsuarios.buscarNodo(usuario);
 
         if (nodoUsuario != null) {
@@ -31,10 +29,8 @@ public class App {
                     usuarioEnLista.getPassword().equals(usuario.getPassword())) {
                 System.out.println("Sesion iniciada con exito");
                 return usuarioEnLista;
-
             }
         }
-
         return null;
     }
 
@@ -49,7 +45,7 @@ public class App {
         }
 
         if (procesoEncontrado != null) {
-            throw new RuntimeException("Ya existe un proceso con ese ID");
+            System.out.println("Ya existe un proceso con ese ID");
         }
 
         Proceso nuevoProceso = new Proceso(id, nombre);
@@ -58,7 +54,7 @@ public class App {
         return nuevoProceso;
     }
 
-    public void eliminarProceso(Proceso proceso) throws Exception {
+    public void eliminarProceso(Proceso proceso) {
 
         if(!listaProcesos.estaVacia()){
             listaProcesos.eliminar(proceso);
@@ -66,11 +62,10 @@ public class App {
         }
 
         else {
-            throw new RuntimeException("No hay procesos para eliminar");
+            System.out.println("No hay procesos para eliminar");
         }
 
     }
-
     public Proceso actualizarProceso(Proceso proceso, String id) {
 
         for (int i = 0; i < listaProcesos.getTamano(); i++) {
@@ -87,13 +82,12 @@ public class App {
 
             }
         }
-
         return null;
     }
 
     public Tarea insertarTareaAlFinal(Proceso proceso, Actividad actividad, Tarea tarea) {
         if (proceso == null || actividad == null || tarea == null) {
-            throw new IllegalArgumentException("Argumentos nulos no permitidos");
+            System.out.println("Argumentos nulos no permitidos");
         }
 
         for (int i = 0; i < listaProcesos.getTamano(); i++) {
@@ -137,7 +131,7 @@ public class App {
         }
 
         if (usuarioEncontrado != null) {
-            throw new RuntimeException("Ya existe un usuario con ese ID");
+            System.out.println("Ya existe un usuario con ese ID");
         }
 
     Usuario usuario = new Usuario(userId,password,rol);

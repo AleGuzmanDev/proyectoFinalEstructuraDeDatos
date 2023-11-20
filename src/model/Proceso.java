@@ -98,7 +98,7 @@ public class Proceso {
             System.out.println("Se ha eliminado la actividad");
         }
         else {
-            throw new RuntimeException("La actividad no existe en la lista");
+            System.out.println("La actividad no existe en la lista");
         }
     }
     public Actividad crearActividad (String nombre, String descripcion, boolean obligatoriedad){
@@ -114,7 +114,7 @@ public class Proceso {
        }
 
        if (actividadEncontrada != null){
-           throw new RuntimeException("La actividad ya existe en la lista");}
+           System.out.println("La actividad ya existe en la lista");}
 
         Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad);
         listaActividades.agregarInicio(nuevaActividad);
@@ -164,7 +164,7 @@ public class Proceso {
         }
 
         if (actividadEncontrada != null){
-            throw new RuntimeException("La actividad ya existe en la lista");}
+            System.out.println("La actividad ya existe en la lista");}
 
         Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad);
         listaActividades.agregarFinal(nuevaActividad);
@@ -196,14 +196,14 @@ public class Proceso {
     public Actividad crearActividadPosicionDeterminada(Actividad nuevaActividad, int posicion) {
         // Verificar si la posición proporcionada es válida
         if (posicion < 0 || posicion > listaActividades.getTamano()) {
-            throw new IllegalArgumentException("Posición inválida");
+            System.out.println("Posición inválida");
         }
 
         // Verificar si la nueva actividad ya existe en la lista
         for (int i = 0; i < listaActividades.getTamano(); i++) {
             Actividad actividad = listaActividades.obtener(i);
             if (actividad.equals(nuevaActividad)) {
-                throw new RuntimeException("La actividad ya existe en la lista");
+                System.out.println("La actividad ya existe en la lista");
             }
         }
 
@@ -213,9 +213,7 @@ public class Proceso {
         indice = posicion;
         return nuevaActividad;
     }
-
-
-
+    
     public String getId() {
         return id;
     }

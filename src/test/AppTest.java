@@ -36,7 +36,7 @@ class AppTest {
     }
 
     @Test
-    void eliminarProceso() throws Exception {
+    void eliminarProceso() {
 
             App app = new App();
 
