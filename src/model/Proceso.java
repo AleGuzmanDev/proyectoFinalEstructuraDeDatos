@@ -9,11 +9,13 @@ public class Proceso {
     private String id;
     private String nombre;
 
+    private int indice = 0;
+
     ListaDoble<Actividad> listaActividades;
     private int tiempoMinimo;
     private int tiempoMaximo;
 
-    public Proceso(String id, String nombre, int tiempoMinimo, int tiempoMaximo) {
+    public Proceso(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
         this.listaActividades = new ListaDoble<>();
@@ -117,6 +119,7 @@ public class Proceso {
         Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad);
         listaActividades.agregarInicio(nuevaActividad);
         System.out.println("Actividad creada con éxito");
+        indice = listaActividades.obtenerPosicionNodo(nuevaActividad);
         return nuevaActividad;
     }
 
@@ -166,41 +169,29 @@ public class Proceso {
         Actividad nuevaActividad = new Actividad(nombre, descripcion, obligatoriedad);
         listaActividades.agregarFinal(nuevaActividad);
         System.out.println("Actividad creada con éxito");
+        indice = listaActividades.obtenerPosicionNodo(nuevaActividad);
+
         return nuevaActividad;
     }
 
+    public Actividad crearActividadDespuesDeUltima(Actividad nuevaActividad) {
 
-    public Actividad crearActividadDespuesDeUltima(Actividad actividadExistente, Actividad nuevaActividad) {
-
+        listaActividades.insertarEnPosicion(nuevaActividad, indice+1);
         for (int i = 0; i < listaActividades.getTamano(); i++) {
             if (listaActividades.obtener(i).equals(nuevaActividad)) {
-                throw new RuntimeException("La actividad ya existe en la lista");
+                return null;
             }
         }
 
-        int indiceUltimaOcurrencia = -1;
-
-        // Buscar la última ocurrencia de la actividad existente
-        for (int i = 0; i < listaActividades.getTamano(); i++) {
-            if (listaActividades.obtener(i).equals(actividadExistente)) {
-                indiceUltimaOcurrencia = i;
-            }
-        }
-
-        if (indiceUltimaOcurrencia != -1) {
+        if (indice != -1) {
             // Inserta la nueva actividad después de la última
-            listaActividades.insertarEnPosicion(nuevaActividad, indiceUltimaOcurrencia + 1);
+            listaActividades.insertarEnPosicion(nuevaActividad, indice + 1);
             return nuevaActividad;
         } else {
             System.out.println("La actividad existente no se encuentra en la lista.");
             return null;
         }
     }
-
-
-    //Este metodo hay que arreglarlo, porque tiene un error
-
-
 
     public Actividad crearActividadPosicionDeterminada(Actividad nuevaActividad, int posicion) {
         // Verificar si la posición proporcionada es válida
@@ -219,6 +210,7 @@ public class Proceso {
         // Insertar la nueva actividad en la posición determinada
         listaActividades.insertarEnPosicion(nuevaActividad, posicion);
         System.out.println("Actividad creada con éxito en posición determinada");
+        indice = posicion;
         return nuevaActividad;
     }
 

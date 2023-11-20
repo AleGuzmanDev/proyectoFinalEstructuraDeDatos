@@ -15,7 +15,7 @@ class ProcesoTest {
     @org.junit.jupiter.api.Test
     void buscarActividad() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
         Actividad actividad = proceso.crearActividad("Actividad 1", "Descripcion 1", true);
         Actividad actividad2 = proceso.crearActividad("Actividad 2", "Descripcion 2", true);
         Actividad actividad3 = proceso.crearActividad("Actividad 3", "Descripcion 3", true);
@@ -35,7 +35,7 @@ class ProcesoTest {
     @org.junit.jupiter.api.Test
     void buscarTarea() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
 
         String nombre = "Actividad 1";
         proceso.crearActividad(nombre, "Descripcion 1", true);
@@ -54,7 +54,7 @@ class ProcesoTest {
         @Test
         public void intercambiarActividadesSinSusTareas() {
 
-            Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+            Proceso proceso = new Proceso("001", "Proceso 1");
             ListaDoble<Actividad> actividades = proceso.getListaActividades();
             // Crear una lista enlazada de actividades
 
@@ -82,7 +82,7 @@ class ProcesoTest {
     @Test
     public void testIntercambiarActividadesConTareas() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
         Actividad actividad1 = proceso.crearActividad("Actividad 1", "Descripción 1", true);
         Actividad actividad2 = proceso.crearActividad("Actividad 2", "Descripción 2", true);
 
@@ -119,7 +119,7 @@ class ProcesoTest {
         String descripcion = "Descripcion cuarta actividad";
         boolean obligatoriedad = true;
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
         Actividad nuevaActividad = proceso.crearActividad(nombre, descripcion, obligatoriedad);
         Actividad actividad = new Actividad("Actividad 1", "Descripción 1", true);
 
@@ -141,7 +141,7 @@ class ProcesoTest {
     @org.junit.jupiter.api.Test
     void eliminarActividad() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
 
         Actividad actividad = proceso.crearActividad("Actividad 1", "Descripcion 1", true);
         proceso.crearActividad("Actividad 2", "Descripcion 2", true);
@@ -156,7 +156,7 @@ class ProcesoTest {
     @org.junit.jupiter.api.Test
     void actualizarActividad() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
 
         String nombre = "Actividad 1";
         proceso.crearActividad(nombre, "Descripcion 1", true);
@@ -177,7 +177,7 @@ class ProcesoTest {
         String descripcion = "Descripcion cuarta actividad";
         boolean obligatoriedad = true;
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
         Actividad nuevaActividad = proceso.crearActividadAlFinal(nombre, descripcion, obligatoriedad);
 
         Actividad actividad1 = new Actividad("Actividad 1", "Descripción 1", true);
@@ -199,48 +199,36 @@ class ProcesoTest {
     @org.junit.jupiter.api.Test
     void crearActividadDespuesDeUltima() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
-
+        Proceso proceso = new Proceso("001", "Proceso 1");
         ListaDoble<Actividad> listaActividades = proceso.getListaActividades();
-
-        // Agregar algunas actividades a la lista
         Actividad actividad1 = new Actividad("Actividad 1", "Descripción 1", true);
         Actividad actividad2 = new Actividad("Actividad 2", "Descripción 2", true);
         Actividad actividad3 = new Actividad("Actividad 3", "Descripción 3", true);
-        Actividad actividad4 = new Actividad("Actividad 4", "Descripción 4", true);
+
+
 
         listaActividades.agregarInicio(actividad1);
         listaActividades.agregarInicio(actividad2);
-        listaActividades.agregarInicio(actividad3);
-        listaActividades.agregarInicio(actividad4);
 
-        System.out.println("Lista de actividades antes de agregar la nueva actividad:");
         listaActividades.imprimirLista();
 
-        // Nueva actividad a agregar después de la última ocurrencia de 'actividad3'
-        Actividad nuevaActividad = new Actividad("Nueva Actividad", "Descripción nueva actividad", true);
+        // Insertar actividad3 después de la última actividad
+        proceso.crearActividadDespuesDeUltima(actividad3);
 
-        // Llamar al método para agregar la nueva actividad después de la última ocurrencia de 'actividad3'
-        Actividad resultado = proceso.crearActividadDespuesDeUltima(actividad3, nuevaActividad);
-
-        System.out.println("Lista de actividades después de agregar la nueva actividad:");
         listaActividades.imprimirLista();
 
-        // Verificar que la nueva actividad se haya agregado correctamente
-        Assertions.assertNotNull(resultado); // La actividad debe existir después de insertarla
-        Assertions.assertEquals(nuevaActividad, resultado); // La actividad debe ser igual a la retornada
+        // Verificar si la actividad3 se inserta correctamente después de la última actividad
+        Assertions.assertEquals(actividad3, listaActividades.obtener(1));
+        Assertions.assertEquals(actividad2, listaActividades.obtener(0));
+        Assertions.assertEquals(actividad1, listaActividades.obtener(2));
 
-        // Verificar que la nueva actividad esté después de la última ocurrencia de 'actividad3'
-        int posicionActividad3 = listaActividades.obtenerPosicionNodo(actividad3);
-        int posicionSiguiente = posicionActividad3 + 1;
 
-        Assertions.assertEquals(nuevaActividad, listaActividades.obtener(posicionSiguiente));
     }
 
     @org.junit.jupiter.api.Test
     void crearActividadPosicionDeterminada() {
 
-        Proceso proceso = new Proceso("001", "Proceso 1", 5, 10);
+        Proceso proceso = new Proceso("001", "Proceso 1");
         ListaDoble<Actividad> listaActividades = proceso.getListaActividades();
         Actividad actividad1 = new Actividad("Actividad 1", "Descripción 1", true);
         Actividad actividad2 = new Actividad("Actividad 2", "Descripción 2", true);

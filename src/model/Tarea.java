@@ -27,7 +27,7 @@ public class Tarea {
 
         // Desencolar hasta la posición deseada
         int i = 0;
-        Cola<Tarea> colaAuxiliar = new Cola<>(); // Crear una cola auxiliar
+        Cola<Tarea> colaAuxiliar = new Cola<>();
 
         while (i < posicion) {
             Tarea tareaDesencolada = cola.desencolar(); // Cambiar por el método real de desencolar Tarea

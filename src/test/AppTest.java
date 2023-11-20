@@ -26,7 +26,7 @@ class AppTest {
         int tiempoMinutos = 5;
         int tiempoMaximo = 10;
 
-        Proceso proceso = app.crearProceso(id,nombre,tiempoMinutos,tiempoMaximo);
+        Proceso proceso = app.crearProceso(id,nombre);
 
         assertNotNull(proceso);
         assertEquals(id,proceso.getId());
@@ -48,8 +48,8 @@ class AppTest {
             int tiempoMinimo = 1;
             int tiempoMaximo = 10;
 
-            Proceso proceso = app.crearProceso(id, nombre, tiempoMinimo, tiempoMaximo);
-            app.crearProceso("002", "Proceso de prueba 2", 5, 10);
+            Proceso proceso = app.crearProceso(id, nombre);
+            app.crearProceso("002", "Proceso de prueba 2");
 
 
 
@@ -68,8 +68,8 @@ class AppTest {
 
         App app = new App();
 
-        Proceso proceso1 = app.crearProceso("001","Proceso 1",5,10);
-        Proceso proceso2= app.crearProceso("002","Proceso 2",6,12);
+        Proceso proceso1 = app.crearProceso("001","Proceso 1");
+        Proceso proceso2= app.crearProceso("002","Proceso 2");
 
         app.getListaProcesos().imprimirLista();
 
@@ -92,7 +92,7 @@ class AppTest {
     void consultarTiempoDuracionProceso() {
 
         App app = new App();
-        Proceso proceso = new Proceso("001","Proceso 1",5,10);
+        Proceso proceso = new Proceso("001","Proceso 1");
         app.consultarTiempoDuracionProceso(proceso);
 
         assertEquals(7.5,app.consultarTiempoDuracionProceso(proceso));

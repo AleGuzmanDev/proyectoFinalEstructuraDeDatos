@@ -38,7 +38,7 @@ public class App {
         return null;
     }
 
-    public Proceso crearProceso(String id, String nombre, int tiempoMinimo, int tiempoMaximo) {
+    public Proceso crearProceso(String id, String nombre) {
         Proceso procesoEncontrado = null;
         for (int i = 0; i < listaProcesos.getTamano(); i++) {
             Proceso proceso = listaProcesos.obtenerNodo(i).getValorNodo();
@@ -52,7 +52,7 @@ public class App {
             throw new RuntimeException("Ya existe un proceso con ese ID");
         }
 
-        Proceso nuevoProceso = new Proceso(id, nombre, tiempoMinimo, tiempoMaximo);
+        Proceso nuevoProceso = new Proceso(id, nombre);
         listaProcesos.agregarInicio(nuevoProceso);
         System.out.println("Proceso creado con éxito");
         return nuevoProceso;
@@ -91,13 +91,6 @@ public class App {
         return null;
     }
 
-
-
-    private Proceso configurarProceso(){
-        return null;
-    }
-
-
     public Tarea insertarTareaAlFinal(Proceso proceso, Actividad actividad, Tarea tarea) {
         if (proceso == null || actividad == null || tarea == null) {
             throw new IllegalArgumentException("Argumentos nulos no permitidos");
@@ -123,11 +116,6 @@ public class App {
         }
         return null;
     }
-
-
-
-
-
 
     public double consultarTiempoDuracionProceso(Proceso proceso) {
         if (proceso != null) {
